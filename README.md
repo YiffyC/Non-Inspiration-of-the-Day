@@ -1,10 +1,10 @@
 # 📜 Non-Inspiration of the Day - Your Daily Dose of Existential Dread
 
-![Non-Inspiration Screenshot](https://i.postimg.cc/rwKwzzYV/image.png)
-
-
 Welcome to **Non-Inspiration of the Day**, the website that reminds you daily just how meaningless everything is.  
 Tired of motivational quotes and positive vibes? Here, we serve nihilism on a silver platter.  
+
+![Non-Inspiration Screenshot](https://i.postimg.cc/rwKwzzYV/image.png)
+
 
 ---
 
