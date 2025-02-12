@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 50 50%22><text y=%220.9em%22 font-size=%2245%22>💀</text></svg>"
+      type="image/svg+xml"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <title>:(</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #ffdde1;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .message-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding-bottom: 20px;
+        animation: bounce 2s infinite alternate ease-in-out;
+      }
+
+      #message {
+        font-size: 50px;
+        font-weight: bold;
+        padding: 20px;
+        background: white;
+        border-radius: 30px;
+        text-align: center;
+        display: inline-block;
+        max-width: 80%;
+        position: relative;
+        box-shadow: 0 0 40px rgba(255, 20, 147, 0.9);
+      }
+
+      #message::after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid white;
+        transform: translateX(-50%);
+      }
+
+      #message span {
+        background-image: linear-gradient(
+          90deg,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet
+        );
+        background-size: 300% auto; /* Augmente la taille pour un effet plus large */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        display: inline-block;
+        animation: rainbowShift 5s infinite linear,
+          fadeText 2s infinite alternate ease-in-out;
+      }
+
+      /* Effet arc-en-ciel amélioré */
+      @keyframes rainbowShift {
+        0% {
+          background-position-x: 0%;
+        }
+        50% {
+          background-position-x: 100%;
+        }
+        100% {
+          background-position-x: 0%;
+        }
+      }
+
+      /* Effet subtil de fondu pour rendre le texte vivant */
+      @keyframes fadeText {
+        0% {
+          opacity: 0.8;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      #toggle-lang {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #ff69b4;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(255, 20, 147, 0.7);
+        transition: transform 0.2s, background-color 0.3s;
+      }
+
+      #toggle-lang:hover {
+        transform: scale(1.1);
+        background-color: #ff1493;
+      }
+
+      /* Style général pour tous les boutons */
+      /* Style général pour tous les boutons */
+      .button-style {
+        position: fixed;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #ff69b4;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(255, 20, 147, 0.7);
+        transition: transform 0.2s, background-color 0.3s;
+        background-size: 200% auto;
+      }
+
+      /* Effet rainbow continu au hover */
+      .button-style:hover {
+        transform: scale(1.1);
+        background-image: linear-gradient(
+          90deg,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet
+        );
+        background-size: 300% auto;
+        animation: rainbowHover 3s infinite linear;
+        color: white; /* Assure une bonne lisibilité */
+      }
+
+      /* Animation Rainbow qui boucle */
+      @keyframes rainbowHover {
+        0% {
+          background-position: 0% center;
+        }
+        100% {
+          background-position: 100% center;
+        }
+      }
+
+      /* Bouton Refresh (Haut gauche) */
+      #refresh-quote {
+        top: 20px;
+        left: 20px;
+      }
+
+      /* Bouton GitHub (Bas gauche) */
+      #github-link {
+        bottom: 20px;
+        left: 20px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="message-container">
+      <div id="message"><span></span></div>
+    </div>
+
+    <button id="toggle-lang">🇬🇧 English</button>
+    <button id="refresh-quote" class="button-style">🔄</button>
+    <a
+      id="github-link"
+      class="button-style"
+      href="https://github.com/YiffyC/Non-Inspiration-of-the-Day"
+      target="_blank"
+      ><i class="fa fa-github"></i> &nbsp; GitHub</a
+    >
+
+    <script>
+      const messagesFR = [
+        "L'homme est condamné à être libre.<br>- Jean-Paul Sartre",
+        "La vie est une maladie dont le sommeil nous soulage toutes les seize heures.<br>- Chamfort",
+        "L'enfer, c'est les autres.<br>- Jean-Paul Sartre",
+        "Le bonheur écrit à l'encre blanche sur des pages blanches.<br>- Henry de Montherlant",
+        "Il n’y a qu’un problème philosophique vraiment sérieux : c’est le suicide.<br>- Albert Camus",
+        "Tout ce que nous faisons n’a aucun sens ultime.<br>- Arthur Schopenhauer",
+        "Dans un monde absurde, il n’y a que l’absurde qui donne du sens.<br>- Albert Camus",
+        "Le néant seul est éternel.<br>- Émile Cioran",
+        "Nous naissons tous fous, quelques-uns le demeurent.<br>- Samuel Beckett",
+        "Le plus grand malheur de l’homme, c’est d’avoir été enfant.<br>- Denis Diderot",
+        "Ce que nous appelons bonheur n’est qu’un instant d’oubli de notre misère.<br>- Blaise Pascal",
+        "Il faut porter encore en soi un chaos pour pouvoir mettre au monde une étoile dansante.<br>- Friedrich Nietzsche",
+        "Le progrès est l’injustice que chaque génération commet à l’égard de la précédente.<br>- Emil Cioran",
+        "La vie oscille, comme un pendule, de la souffrance à l’ennui.<br>- Arthur Schopenhauer",
+        "Le néant ne trahit jamais.<br>- Emil Cioran",
+        "Le suicide est le seul droit inaliénable de l’homme.<br>- Emil Cioran",
+        "La meilleure chose qui puisse arriver à un homme, c'est de ne pas naître.<br>- Sophocle",
+        "La vie n'a de sens que si l'on accepte qu'elle n'en a aucun.<br>- Albert Camus",
+        "Plus nous avançons dans la vie, plus nous nous rendons compte que nous sommes seuls.<br>- Emil Cioran",
+        "Tous les hommes meurent, mais peu vivent vraiment.<br>- William Wallace",
+        "Tout ce qui commence finit.<br>- Sénèque",
+        "Il n’y a pas de différence entre un homme qui dort et un homme mort.<br>- Héraclite",
+        "Le plus grand plaisir de la vie est son arrêt.<br>- Chamfort",
+        "La douleur est la réalité première de l’existence.<br>- Arthur Schopenhauer",
+        "Le silence éternel de ces espaces infinis m’effraie.<br>- Blaise Pascal",
+        "Nous sommes tous condamnés à mort avec un sursis indéfini.<br>- Victor Hugo",
+        "Le bonheur est une illusion, la souffrance est une certitude.<br>- Arthur Schopenhauer",
+        "La vie n’a de sens que celui qu’on veut bien lui donner.<br>- Jean-Paul Sartre",
+        "Vivre, c’est souffrir.<br>- Arthur Schopenhauer",
+        "La conscience est la malédiction de l’homme.<br>- Emil Cioran",
+        "Le temps détruit tout.<br>- Héraclite",
+        "L'homme est un animal qui a trahi son instinct.<br>- Emil Cioran",
+        "La souffrance est le fond de la vie et le bonheur en est une illusion passagère.<br>- Voltaire",
+        "L'existence est un fardeau dont on ne se débarrasse que dans la mort.<br>- Emil Cioran",
+        "Si Dieu existe, il doit être profondément sadique.<br>- Emil Cioran",
+        "Les hommes naissent libres et égaux en droits, puis ils passent leur vie à prouver le contraire.<br>- Jean-Jacques Rousseau",
+        "La raison est une maladie incurable.<br>- Emil Cioran",
+        "Nous sommes tous des cadavres en sursis.<br>- Paul Valéry",
+        "La solitude est le destin de tous les génies.<br>- Arthur Schopenhauer",
+        "Chaque vie est un échec.<br>- Emil Cioran",
+        "La seule certitude, c’est que nous allons mourir.<br>- Sénèque",
+        "Le monde est un théâtre, mais la pièce est mal écrite.<br>- Oscar Wilde",
+        "Rien ne vaut la peine d’être vécu.<br>- Emil Cioran",
+        "La vie est un cauchemar duquel on ne peut se réveiller.<br>- Edgar Allan Poe",
+        "Ce qui compte ce n'est pas de savoir pourquoi on vit, mais comment on meurt.<br>- Albert Camus",
+        "L'espoir est le pire des maux, car il prolonge les souffrances de l'homme.<br>- Friedrich Nietzsche",
+        "La vie est une farce sinistre.<br>- Emil Cioran",
+        "La liberté est une illusion.<br>- Jean-Paul Sartre",
+        "Nous sommes nés pour mourir.<br>- Emil Cioran",
+        "L’amour est une illusion, la solitude une réalité.<br>- Arthur Schopenhauer",
+        "Tout homme est un cadavre en devenir.<br>- Emil Cioran",
+        "La vieillesse est le seul moyen de vivre longtemps.<br>- Emil Cioran",
+        "La vie est un long suicide inconscient.<br>- Emil Cioran",
+        "Il n’y a qu’une erreur innée : celle qui consiste à croire que nous existons pour être heureux.<br>- Arthur Schopenhauer",
+        "Ce qui est terrible, c’est de ne pas pouvoir se suicider à chaque instant.<br>- Emil Cioran",
+        "Le seul fait d'exister est un véritable bonheur, ou un malheur insupportable.<br>- Voltaire",
+        "Les hommes aiment mieux l'illusion que la vérité.<br>- Friedrich Nietzsche",
+        "L’humanité se définit par son autodestruction.<br>- Emil Cioran",
+        "Chaque naissance est une condamnation à mort.<br>- Emil Cioran",
+        "La vie est un accident absurde.<br>- Emil Cioran",
+        "Être conscient, c’est être en enfer.<br>- Emil Cioran",
+        "La seule vérité de la vie est la mort.<br>- Emil Cioran",
+        "Le pire dans la vie, c'est qu'on s'y habitue.<br>- Emil Cioran",
+        "La foi est un refuge pour ceux qui refusent d’affronter l’absurdité de la vie.<br>- Friedrich Nietzsche",
+        "Nous vivons comme si nous n’allions jamais mourir, et nous mourons comme si nous n’avions jamais vécu.<br>- Sénèque",
+        "Tout ce que nous aimons finira par nous être enlevé.<br>- Emil Cioran",
+        "La seule chose que nous apprenons de l'histoire, c'est que nous n'apprenons rien.<br>- Georg Wilhelm Friedrich Hegel",
+        "La vie n'est qu'un mauvais quart d'heure fait de moments exquis.<br>- Oscar Wilde",
+        "Chaque instant nous rapproche de la tombe.<br>- Sénèque",
+        "La vie est une prison dont la mort est l’unique issue.<br>- Emil Cioran",
+        "Tout est vain.<br>- L'Ecclésiaste",
+        "La vie est un conte raconté par un idiot, plein de bruit et de fureur, ne signifiant rien.<br>- William Shakespeare",
+        "L’homme est un loup pour l’homme.<br>- Thomas Hobbes",
+        "Tout le monde veut vivre longtemps, mais personne ne veut être vieux.<br>- Jonathan Swift",
+        "Nous nous mentons à nous-mêmes pour pouvoir survivre.<br>- Friedrich Nietzsche",
+        "Nous sommes trop conscients pour être heureux.<br>- Emil Cioran",
+        "L'histoire de l'humanité est celle d'un long suicide collectif.<br>- Albert Camus",
+        "Le nihilisme est l'ultime vérité.<br>- Emil Cioran",
+      ];
+
+      const messagesEN = [
+        "Man is condemned to be free.<br>- Jean-Paul Sartre",
+        "Life is a disease that sleep relieves every sixteen hours.<br>- Chamfort",
+        "Hell is other people.<br>- Jean-Paul Sartre",
+        "Happiness is written in white ink on white pages.<br>- Henry de Montherlant",
+        "There is only one really serious philosophical problem: suicide.<br>- Albert Camus",
+        "Everything we do ultimately has no meaning.<br>- Arthur Schopenhauer",
+        "In an absurd world, only the absurd gives meaning.<br>- Albert Camus",
+        "Only nothingness is eternal.<br>- Emil Cioran",
+        "We are all born mad, some remain so.<br>- Samuel Beckett",
+        "The greatest misfortune of man is having been a child.<br>- Denis Diderot",
+        "What we call happiness is just a momentary oblivion of our misery.<br>- Blaise Pascal",
+        "One must still have chaos in oneself to be able to give birth to a dancing star.<br>- Friedrich Nietzsche",
+        "Progress is the injustice that each generation commits against the previous one.<br>- Emil Cioran",
+        "Life swings, like a pendulum, between suffering and boredom.<br>- Arthur Schopenhauer",
+        "Nothingness never betrays.<br>- Emil Cioran",
+        "Suicide is man's only inalienable right.<br>- Emil Cioran",
+        "The best thing that can happen to a man is never to be born.<br>- Sophocles",
+        "Life only has meaning if one accepts that it has none.<br>- Albert Camus",
+        "The further we go in life, the more we realize we are alone.<br>- Emil Cioran",
+        "All men die, but few truly live.<br>- William Wallace",
+        "Everything that begins must end.<br>- Seneca",
+        "There is no difference between a man who sleeps and a dead man.<br>- Heraclitus",
+        "The greatest pleasure in life is its end.<br>- Chamfort",
+        "Pain is the primary reality of existence.<br>- Arthur Schopenhauer",
+        "The eternal silence of these infinite spaces frightens me.<br>- Blaise Pascal",
+        "We are all sentenced to death with an indefinite reprieve.<br>- Victor Hugo",
+        "Happiness is an illusion, suffering is a certainty.<br>- Arthur Schopenhauer",
+        "Life has no meaning except the one we choose to give it.<br>- Jean-Paul Sartre",
+        "To live is to suffer.<br>- Arthur Schopenhauer",
+        "Consciousness is man's curse.<br>- Emil Cioran",
+        "Time destroys everything.<br>- Heraclitus",
+        "Man is an animal that has betrayed its instincts.<br>- Emil Cioran",
+        "Suffering is the essence of life, and happiness is but a fleeting illusion.<br>- Voltaire",
+        "Existence is a burden that can only be shed in death.<br>- Emil Cioran",
+        "If God exists, He must be profoundly sadistic.<br>- Emil Cioran",
+        "Men are born free and equal in rights, then spend their lives proving otherwise.<br>- Jean-Jacques Rousseau",
+        "Reason is an incurable disease.<br>- Emil Cioran",
+        "We are all corpses on hold.<br>- Paul Valéry",
+        "Solitude is the destiny of all geniuses.<br>- Arthur Schopenhauer",
+        "Every life is a failure.<br>- Emil Cioran",
+        "The only certainty is that we will die.<br>- Seneca",
+        "The world is a stage, but the play is badly written.<br>- Oscar Wilde",
+        "Nothing is worth living for.<br>- Emil Cioran",
+        "Life is a nightmare from which we cannot wake up.<br>- Edgar Allan Poe",
+        "What matters is not knowing why we live, but how we die.<br>- Albert Camus",
+        "Hope is the worst of evils, for it prolongs the suffering of man.<br>- Friedrich Nietzsche",
+        "Life is a grim farce.<br>- Emil Cioran",
+        "Freedom is an illusion.<br>- Jean-Paul Sartre",
+        "We are born to die.<br>- Emil Cioran",
+        "Love is an illusion, solitude is reality.<br>- Arthur Schopenhauer",
+        "Every man is a corpse in the making.<br>- Emil Cioran",
+        "Old age is the only way to live long.<br>- Emil Cioran",
+        "Life is a long unconscious suicide.<br>- Emil Cioran",
+        "There is only one inborn error: the belief that we exist to be happy.<br>- Arthur Schopenhauer",
+        "The truly terrible thing is not being able to commit suicide at any moment.<br>- Emil Cioran",
+        "The mere fact of existing is either a great joy or unbearable suffering.<br>- Voltaire",
+        "Men prefer illusion over truth.<br>- Friedrich Nietzsche",
+        "Humanity is defined by its self-destruction.<br>- Emil Cioran",
+        "Every birth is a death sentence.<br>- Emil Cioran",
+        "Life is an absurd accident.<br>- Emil Cioran",
+        "To be conscious is to be in hell.<br>- Emil Cioran",
+        "The only truth in life is death.<br>- Emil Cioran",
+        "The worst thing in life is that we get used to it.<br>- Emil Cioran",
+        "Faith is a refuge for those who refuse to face life's absurdity.<br>- Friedrich Nietzsche",
+        "We live as if we will never die, and we die as if we never lived.<br>- Seneca",
+        "Everything we love will eventually be taken from us.<br>- Emil Cioran",
+        "The only thing we learn from history is that we learn nothing.<br>- Georg Wilhelm Friedrich Hegel",
+        "Life is just a bad quarter of an hour made up of exquisite moments.<br>- Oscar Wilde",
+        "Every moment brings us closer to the grave.<br>- Seneca",
+        "Life is a prison with death as the only exit.<br>- Emil Cioran",
+        "Everything is futile.<br>- Ecclesiastes",
+        "Life is a tale told by an idiot, full of sound and fury, signifying nothing.<br>- William Shakespeare",
+        "Man is a wolf to man.<br>- Thomas Hobbes",
+        "Everyone wants to live long, but no one wants to be old.<br>- Jonathan Swift",
+        "We lie to ourselves in order to survive.<br>- Friedrich Nietzsche",
+        "We are too aware to be happy.<br>- Emil Cioran",
+        "The history of humanity is one long collective suicide.<br>- Albert Camus",
+        "Nihilism is the ultimate truth.<br>- Emil Cioran",
+      ];
+
+      let isEnglish = localStorage.getItem("language") === "EN";
+      let languageChanged = localStorage.getItem("langChanged") === "true";
+
+      // Récupère l'index stocké
+      let storedIndex = localStorage.getItem("currentIndex");
+      let currentIndex = parseInt(storedIndex, 10);
+
+      // 🔹 **Correction définitive : Toujours générer une nouvelle citation après un F5**
+      if (languageChanged) {
+        // ✅ Si la langue vient d'être changée, on garde l'index actuel pour la traduction
+        localStorage.setItem("langChanged", "false"); // Réinitialise après la traduction
+      } else {
+        // ✅ Si ce n'est PAS un changement de langue, on génère une nouvelle citation IMMÉDIATEMENT
+        currentIndex = Math.floor(Math.random() * messagesFR.length);
+        localStorage.setItem("currentIndex", currentIndex);
+      }
+
+      // 🔹 **Nouvelle vérification pour éviter les répétitions après un F5**
+      if (localStorage.getItem("langChanged") === "false") {
+        currentIndex = Math.floor(Math.random() * messagesFR.length);
+        localStorage.setItem("currentIndex", currentIndex);
+      }
+
+      const messageElement = document.querySelector("#message span");
+      const toggleButton = document.getElementById("toggle-lang");
+      const refreshButton = document.getElementById("refresh-quote");
+
+      function updateTexts() {
+        toggleButton.innerHTML = isEnglish ? "🇫🇷 Français" : "🇬🇧 English";
+        refreshButton.innerHTML = isEnglish ? "Unmotivate me" : "Démotive moi";
+      }
+
+      // 🔹 Fonction pour générer une nouvelle citation aléatoire
+      function refreshQuote() {
+        let newIndex;
+        do {
+          newIndex = Math.floor(Math.random() * messagesFR.length);
+        } while (newIndex === currentIndex); // Évite de répéter la même citation
+
+        currentIndex = newIndex;
+        localStorage.setItem("currentIndex", currentIndex);
+        updateMessage();
+      }
+
+      // 🔹 Ajout d'un event listener sur le bouton refresh
+      refreshButton.addEventListener("click", refreshQuote);
+
+      // 🔹 **Mettre à jour le message**
+      function updateMessage() {
+        const messages = isEnglish ? messagesEN : messagesFR;
+        messageElement.innerHTML =
+          messages[currentIndex] || "Erreur inattendue 😵";
+      }
+
+      // 🔹 **Changer de langue sans répéter la citation après F5**
+      toggleButton.addEventListener("click", () => {
+        isEnglish = !isEnglish;
+        localStorage.setItem("language", isEnglish ? "EN" : "FR");
+        localStorage.setItem("langChanged", "true"); // Indiquer qu'on a changé de langue
+
+        updateMessage();
+        updateTexts(); // 🔹 Mise à jour des textes après changement de langue
+      });
+
+      // 🔹 **Affichage initial avec la bonne langue**
+      toggleButton.innerHTML = isEnglish ? "🇫🇷 Français" : "🇬🇧 English";
+      updateMessage();
+      updateTexts();
+    </script>
+  </body>
+</html>
