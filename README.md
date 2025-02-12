@@ -1,7 +1,6 @@
 # 📜 Non-Inspiration of the Day - Your Daily Dose of Existential Dread
 
-![Non-Inspiration Screenshot](https://postimg.cc/xXV24j2h)
-![Non-Inspiration Screenshot]
+![Non-Inspiration Screenshot](https://i.postimg.cc/rwKwzzYV/image.png)
 
 
 Welcome to **Non-Inspiration of the Day**, the website that reminds you daily just how meaningless everything is.  
