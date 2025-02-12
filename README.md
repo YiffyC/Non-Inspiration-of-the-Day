@@ -23,7 +23,7 @@ Because why search for light when you can comfortably drown in the darkness of h
 We used technologies to ensure that your depressive experience is smooth and optimized:  
 
 - **HTML5** - Because even despair deserves semantic structure.  
-- **CSS3** - With completely useless rainbow animations to *ompensate for the bleakness of the text.  
+- **CSS3** - With completely useless rainbow animations to ompensate for the bleakness of the text.  
 - **JavaScript (ES6)** - To dynamically generate nihilistic content and ruin your day in real-time.  
 - **LocalStorage** - Because even your browser should remember your sadness.  
-- **GitHub** - So this collective existential crisis **can be shared with the world.  
+- **GitHub** - So this collective existential crisis can be shared with the world.  
